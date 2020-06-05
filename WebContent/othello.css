@@ -1,0 +1,24 @@
+ /* 盤全体を黒色にする */
+.board {
+	background-color: black;
+}
+
+/* マス１つ１つを緑色の正方形にする */
+.board tr td {
+	font-size: 50px;
+	background-color: #00a200;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+}
+
+/*黒と白のクラスを定義*/
+.black:before {
+	color: black;
+	content: "●";
+}
+.white:before {
+	color: white;
+	content: "●";
+}
