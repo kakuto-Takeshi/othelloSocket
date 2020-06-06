@@ -39,6 +39,15 @@ public class OthelloSocket {
 
     @OnClose//クライアントが切断したとき
     public void onClose(Session mySession) {
+    	//インスタンス内のsessionを削除
+    	int roomIndex=Integer.parseInt(mySession.getId() , 16)/2;
+    	OthelloRoom myRoom = room.get(roomIndex);
+    	if(Integer.parseInt(mySession.getId() , 16)%2 == 0) {
+    		myRoom.setSession1(null);
+    	} else {
+    		myRoom.setSession2(null);
+        }
+    	//通信を切断
     	System.out.println("disconnect ID:"+mySession.getId());
         try {
 			mySession.close();
