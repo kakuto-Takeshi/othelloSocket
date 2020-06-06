@@ -28,7 +28,7 @@ public class OthelloRoom {
 		if(session2 != null) { session2.getAsyncRemote().sendObject(obj);}
 	}
 
-	//メッセージ送信
+	//ポイント送信
 		public void sendIndex(IndexObj obj) {
 			if(session1 != null) { session1.getAsyncRemote().sendObject(obj);}
 			if(session2 != null) { session2.getAsyncRemote().sendObject(obj);}

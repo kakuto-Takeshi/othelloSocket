@@ -10,7 +10,9 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/othello" , decoders = {MsgDecoder.class , IndexDecoder.class} , encoders = {MsgEncoder.class , IndexEncoder.class})
+@ServerEndpoint(value = "/othello" ,
+	decoders = {Decoders.MsgDecoder.class , Decoders.IndexDecoder.class} ,
+	encoders = {Encoders.MsgEncoder.class , Encoders.IndexEncoder.class})
 public class OthelloSocket {
 	private static List<OthelloRoom> room = new CopyOnWriteArrayList<>();
 
