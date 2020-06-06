@@ -10,7 +10,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/othello")
+@ServerEndpoint(value = "/othello" , decoders = {MsgDecoder.class , IndexDecoder.class} , encoders = {MsgEncoder.class , IndexEncoder.class})
 public class OthelloSocket {
 	private static List<OthelloRoom> room = new CopyOnWriteArrayList<>();
 
@@ -29,12 +29,15 @@ public class OthelloSocket {
     }
 
     @OnMessage//クライアントからデータを受信したとき
-    public void onMessage(String text , Session mySession) {
+    public void onMessage(BaseObj obj , Session mySession) {
     	int roomIndex=Integer.parseInt(mySession.getId() , 16)/2;
     	OthelloRoom myRoom = room.get(roomIndex);
-    	OthelloLogic myLogic = myRoom.getLogic();
-    	String points=myLogic.logic(text);
-    	myRoom.send(points);
+    	if(obj instanceof MsgObj) {
+	    	myRoom.sendMsg((MsgObj)obj);
+    	} else if (obj instanceof IndexObj){
+	    	myRoom.logic((IndexObj)obj);
+	    	myRoom.sendIndex((IndexObj)obj);
+    	}
     }
 
     @OnClose//クライアントが切断したとき

@@ -1,8 +1,10 @@
 package othelloSocket;
 
+import java.util.ArrayList;
+
 public class OthelloLogic {
 	OthelloField  field=null;
-	String points;
+	ArrayList<Integer> pointList = new ArrayList<>();
 
 	//コンストラクタ
 	public OthelloLogic() {
@@ -10,19 +12,17 @@ public class OthelloLogic {
 	}
 
 	//メイン的な
-	public String logic(String index) {
-		points="";
-		point(index);
+	public void logic(IndexObj obj) {
+		pointList.clear();
+		point(obj.getIndex());
 		put();
-		if(!points.equals("")) points=points.substring(1);
-		return points;
+		obj.setPoints(pointList);
 	}
 
 	//xy座標セット
-	public void point(String index) {
-		int point=Integer.parseInt(index);
-		int x=point%8;
-		int y=point/8;
+	public void point(int index) {
+		int x=index%8;
+		int y=index/8;
 		field.setX(x);
 		field.setY(y);
 	}
@@ -92,8 +92,8 @@ public class OthelloLogic {
 	}
 
 	public void addPoint(int x , int y) {
-		String point=String.valueOf(x+y*8);
-		points+=":"+point;
+		int point=x+y*8;
+		pointList.add(point);
 	}
 
 }

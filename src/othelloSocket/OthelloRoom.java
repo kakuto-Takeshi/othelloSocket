@@ -23,8 +23,19 @@ public class OthelloRoom {
 	public OthelloLogic getLogic() { return logic; }
 
 	//メッセージ送信
-	public void send(String points) {
-		if(session1 != null) { session1.getAsyncRemote().sendText(points);}
-		if(session2 != null) { session2.getAsyncRemote().sendText(points);}
+	public void sendMsg(MsgObj obj) {
+		if(session1 != null) { session1.getAsyncRemote().sendObject(obj);}
+		if(session2 != null) { session2.getAsyncRemote().sendObject(obj);}
+	}
+
+	//メッセージ送信
+		public void sendIndex(IndexObj obj) {
+			if(session1 != null) { session1.getAsyncRemote().sendObject(obj);}
+			if(session2 != null) { session2.getAsyncRemote().sendObject(obj);}
+		}
+
+	//ロジック実行
+	public void logic(IndexObj obj) {
+		logic.logic(obj);
 	}
 }
