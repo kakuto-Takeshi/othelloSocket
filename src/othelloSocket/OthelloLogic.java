@@ -13,11 +13,12 @@ public class OthelloLogic {
 
 	//メイン的な
 	public boolean logic(IndexObj obj) {
-		obj.setNum(field.getNum());
+		obj.setTurnNum(field.getNum());
 		pointList.clear();
 		point(obj.getIndex());
 		put();
 		obj.setPoints(pointList);
+		count(field.getTable() , obj);
 
 		return (pointList.size() != 0);
 	}
@@ -88,9 +89,27 @@ public class OthelloLogic {
 		return re;
 	}
 
+	//ひっくり返すポイントを追加
 	public void addPoint(int x , int y) {
 		int point=x+y*8;
 		pointList.add(point);
+	}
+
+	//石の数を数える。
+	public void count(String[][] table , IndexObj obj) {
+		int wNum = 0;
+		int bNum = 0;
+		int noNum = 0;
+		for(int i=0;i<table.length;i++) {						//数を数える
+			for(int j=0;j<table[i].length;j++) {
+				if(table[i][j].equals("w")) wNum++;
+				if(table[i][j].equals("b")) bNum++;
+				if(table[i][j].equals("no")) noNum++;
+			}
+		}
+		obj.setWNum(wNum);
+		obj.setBNum(bNum);
+		obj.setNoNum(noNum);
 	}
 
 }

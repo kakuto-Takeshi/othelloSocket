@@ -1,4 +1,3 @@
-
 var n = 0;//石を置いた回数
 var turn = n%2;//どちらのターンか white:0 , black:1
 var enemy = (n+1)%2;//相手の数字
@@ -9,7 +8,7 @@ var msgObj = { type : 'msg' , msg : null };
 var indexObj = { type : 'index' , index : null };
 
 window.onload = function () {
-	//クリックしたときのindex番号を取得
+//クリックしたときのindex番号を取得
 table = Array.from(document.getElementsByTagName("td"));
 table.forEach(position => {
 	position.addEventListener('click', function(){
@@ -22,12 +21,12 @@ table.forEach(position => {
 	});
 }
 
-	// WebSocketオブジェクト生成
+// WebSocketオブジェクト生成
 var wSck= new WebSocket("ws://localhost:8080/othelloSocket/othello");
 
 //ソケット接続時のアクション
 wSck.onopen = function() {
-	document.getElementById('show').innerHTML += "接続しました。" + "<br/>" + color[turn] + "の番です。<br/>";
+	document.getElementById('show').innerHTML += "接続しました。" + "<br>";
 };
 
 //メッセージを受け取ったときのアクション
@@ -35,9 +34,9 @@ wSck.onmessage = function(e) {
 	console.log(e.data);
 	var obj = JSON.parse(e.data);
 	if(obj.type == 'msg'){
-		document.getElementById('show').innerHTML += obj.msg + "<br/>";
+		document.getElementById('show').innerHTML += obj.turn + "：" + obj.msg + "<br>";
 	} else if(obj.type == 'index') {
-		n = obj.num;
+		n = obj.turnNum;
 		turn = n%2;
 		enemy = (n+1)%2;
 		obj.points.forEach(point => {
@@ -45,7 +44,7 @@ wSck.onmessage = function(e) {
 			table[point].classList.add(colorSet[turn]);
 			table[point].classList.replace(colorSet[enemy] , colorSet[turn]);
 		});
-		document.getElementById('show').innerHTML += color[enemy] + "の番です。<br/>";
+		document.getElementById('show').innerHTML += color[enemy] + "の番です。<br>";
 	}
 };
 

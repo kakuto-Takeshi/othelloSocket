@@ -23,10 +23,19 @@ public class OthelloSocket {
         	OthelloRoom myRoom = new OthelloRoom();
         	myRoom.setSession1(mySession);
         	room.add(myRoom);
+        	MsgObj msg = new MsgObj("対戦相手を探しています。");
+    		myRoom.sendMsg(msg);
         } else {
         	int roomIndex=Integer.parseInt(mySession.getId() , 16)/2;
         	OthelloRoom myRoom=room.get(roomIndex);
         	myRoom.setSession2(mySession);
+        	if(myRoom.getSession1() != null && myRoom.getSession2() != null) {
+        		MsgObj msg = new MsgObj("対戦相手が見つかりました。<br>黒の番です。");
+        		myRoom.sendMsg(msg);
+        	} else if(myRoom.getSession1() == null) {
+        		MsgObj msg = new MsgObj("対戦相手がいません。リロードしてください。");
+    			mySession.getAsyncRemote().sendObject(msg);
+        	}
         }
     }
 
@@ -35,34 +44,47 @@ public class OthelloSocket {
     	int roomIndex=Integer.parseInt(mySession.getId() , 16)/2;
     	OthelloRoom myRoom = room.get(roomIndex);
     	if(obj instanceof MsgObj) {
-	    	myRoom.sendMsg((MsgObj)obj);
+    		MsgObj msgObj = (MsgObj) obj;
+    		if(Integer.parseInt(mySession.getId() , 16)%2 == 0) {msgObj.setTurn("黒");}
+    		else {msgObj.setTurn("白");}
+	    	myRoom.sendMsg(msgObj);
     	} else if (obj instanceof IndexObj){
+    		IndexObj indexObj = (IndexObj) obj;
     		if(myRoom.getSession1() != null && myRoom.getSession2() != null) {
 	    		if(Integer.parseInt(mySession.getId() , 16)%2 == myRoom.getNum()%2) {
-	    			boolean isJudgment = myRoom.logic((IndexObj)obj);
+	    			boolean isJudgment = myRoom.logic(indexObj);
 	    	    	if(isJudgment) {
-	    	    		myRoom.sendIndex((IndexObj)obj);
+	    	    		myRoom.sendIndex(indexObj);
+	    	    		if(indexObj.getNoNum() == 0) {
+	    	    			MsgObj msg = new MsgObj("ゲーム終了！");
+	    	        		myRoom.sendMsg(msg);
+	    	        		if(indexObj.getBNum() > indexObj.getWNum()) {
+	    	        			msg.setMsg("黒の勝ち！");
+	    	        		} else if (indexObj.getBNum() < indexObj.getWNum()) {
+	    	        			msg.setMsg("白の勝ち！");
+	    	        		} else {
+	    	        			msg.setMsg("引き分け！");
+	    	        		}
+	    	        		myRoom.sendMsg(msg);
+	    	    		}
 	    	    	} else {
-	    	    		MsgObj ng = new MsgObj();
-	        			ng.setMsg("その場所には置けません");
-	        			mySession.getAsyncRemote().sendObject(ng);
+	    	    		MsgObj msg = new MsgObj("その場所には置けません。");
+	        			mySession.getAsyncRemote().sendObject(msg);
 	    	    	}
 	    		} else {
-	    			MsgObj ng = new MsgObj();
-	    			ng.setMsg("相手のターンです");
-	    			mySession.getAsyncRemote().sendObject(ng);
+	    			MsgObj msg = new MsgObj("相手のターンです。");
+	    			mySession.getAsyncRemote().sendObject(msg);
 	    		}
     		} else {
-    			MsgObj ng = new MsgObj();
-    			ng.setMsg("対戦相手がいません");
-    			mySession.getAsyncRemote().sendObject(ng);
+    			MsgObj msg = new MsgObj("対戦相手がいません。");
+    			mySession.getAsyncRemote().sendObject(msg);
     		}
     	}
     }
 
     @OnClose//クライアントが切断したとき
     public void onClose(Session mySession) {
-    	//インスタンス内のsessionを削除
+    	//インスタンス内のsession情報を削除
     	int roomIndex=Integer.parseInt(mySession.getId() , 16)/2;
     	OthelloRoom myRoom = room.get(roomIndex);
     	if(Integer.parseInt(mySession.getId() , 16)%2 == 0) {
@@ -70,6 +92,8 @@ public class OthelloSocket {
     	} else {
     		myRoom.setSession2(null);
         }
+    	MsgObj msg = new MsgObj("対戦相手が切断しました。");
+    	myRoom.sendMsg(msg);
     	//通信を切断
     	System.out.println("disconnect ID:"+mySession.getId());
         try {

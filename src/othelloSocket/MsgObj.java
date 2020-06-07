@@ -8,6 +8,12 @@ public class MsgObj extends BaseObj{
 	//コンストラクタ
 	public MsgObj() {
 		type = "msg";
+		turn = "神";
+	}
+	public MsgObj(String text) {
+		type = "msg";
+		turn = "神";
+		msg = text;
 	}
 
 	//セッター
