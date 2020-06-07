@@ -6,7 +6,9 @@ public class MsgObj extends BaseObj{
 	private String msg;
 
 	//コンストラクタ
-	public MsgObj() {}
+	public MsgObj() {
+		type = "msg";
+	}
 
 	//セッター
 	public void setType(String type) {this.type = type;}

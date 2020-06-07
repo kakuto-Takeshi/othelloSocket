@@ -37,8 +37,26 @@ public class OthelloSocket {
     	if(obj instanceof MsgObj) {
 	    	myRoom.sendMsg((MsgObj)obj);
     	} else if (obj instanceof IndexObj){
-	    	myRoom.logic((IndexObj)obj);
-	    	myRoom.sendIndex((IndexObj)obj);
+    		if(myRoom.getSession1() != null && myRoom.getSession2() != null) {
+	    		if(Integer.parseInt(mySession.getId() , 16)%2 == myRoom.getNum()%2) {
+	    			boolean isJudgment = myRoom.logic((IndexObj)obj);
+	    	    	if(isJudgment) {
+	    	    		myRoom.sendIndex((IndexObj)obj);
+	    	    	} else {
+	    	    		MsgObj ng = new MsgObj();
+	        			ng.setMsg("その場所には置けません");
+	        			mySession.getAsyncRemote().sendObject(ng);
+	    	    	}
+	    		} else {
+	    			MsgObj ng = new MsgObj();
+	    			ng.setMsg("相手のターンです");
+	    			mySession.getAsyncRemote().sendObject(ng);
+	    		}
+    		} else {
+    			MsgObj ng = new MsgObj();
+    			ng.setMsg("対戦相手がいません");
+    			mySession.getAsyncRemote().sendObject(ng);
+    		}
     	}
     }
 

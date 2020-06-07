@@ -35,7 +35,14 @@ public class OthelloRoom {
 		}
 
 	//ロジック実行
-	public void logic(IndexObj obj) {
-		logic.logic(obj);
+	public boolean logic(IndexObj obj) {
+		boolean isJudgment = logic.logic(obj);
+		return isJudgment;
 	}
+
+	//ターン情報取得
+	public int getNum() {
+		return logic.field.getNum();
+	}
+
 }

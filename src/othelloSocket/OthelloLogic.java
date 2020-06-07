@@ -12,11 +12,14 @@ public class OthelloLogic {
 	}
 
 	//メイン的な
-	public void logic(IndexObj obj) {
+	public boolean logic(IndexObj obj) {
+		obj.setNum(field.getNum());
 		pointList.clear();
 		point(obj.getIndex());
 		put();
 		obj.setPoints(pointList);
+
+		return (pointList.size() != 0);
 	}
 
 	//xy座標セット
@@ -30,13 +33,6 @@ public class OthelloLogic {
 	//石を置くメソッド
 	public void put() {
 		String[][] table=field.getTable();			//fieldインスタンスから現在のテーブルを取得
-
-//		for(int i=0;i<8;i++) {
-//			for(int j=0;j<8;j++) {
-//				System.out.print(table[i][j]+",");
-//			}
-//			System.out.println();
-//		}
 
 		int x=field.getX();								//x,yを取得
 		int y=field.getY();
@@ -59,6 +55,7 @@ public class OthelloLogic {
 			field.setTable(table);						//テーブルが全て更新され、fieldインスタンスへテーブルを返す
 			if(turn.equals("w")) turn="b";			//ターン交代
 			else if(turn.equals("b")) turn="w";
+			field.setNum(field.getNum()+1);		//ターン増加
 		}else {												//置けない場所だった場合
 			reSum=0;										//置けないので、ひっくり返した数は0とする
 		}

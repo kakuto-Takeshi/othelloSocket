@@ -7,6 +7,7 @@ public class OthelloField {
 	private int w;//白の数
 	private int b;//黒の数
 	private int no;//空白の数
+	private int num;//何ターン目か
 	private int re;//ひっくり返した数
 	private String turn;//白のターンか黒のターンか
 
@@ -21,6 +22,7 @@ public class OthelloField {
 		table[4][4]="w";
 		setTable(table);//初期化したtableをセットする
 		setTurn("b");
+		setNum(0);
 	}
 
 	//セッター
@@ -30,6 +32,7 @@ public class OthelloField {
 	public void setW(int w) {this.w=w;}
 	public void setB(int b) {this.b=b;}
 	public void setNo(int no) {this.no=no;}
+	public void setNum(int num) {this.num=num;}
 	public void setRe(int re) {this.re=re;}
 	public void setTurn(String turn) {this.turn=turn;}
 
@@ -40,6 +43,7 @@ public class OthelloField {
 	public int getW() {return w;}
 	public int getB() {return b;}
 	public int getNo() {return no;}
+	public int getNum() {return num;}
 	public int getRe() {return re;}
 	public String getTurn() {return turn;}
 }
