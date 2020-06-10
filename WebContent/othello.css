@@ -1,15 +1,17 @@
  /* 盤全体を黒色にする */
-.board {
+#board {
 	background-color: black;
+	margin: 0 auto;
+	table-layout: fixed;
 }
 
 /* マス１つ１つを緑色の正方形にする */
-.board tr td {
-	font-size: 50px;
+#board tr td {
+	font-size: 65px;
 	background-color: #00a200;
-	width: 50px;
-	height: 50px;
-	line-height: 50px;
+	width: 65px;
+	height: 65px;
+	line-height: 65px;
 	text-align: center;
 }
 
@@ -21,4 +23,110 @@
 .white:before {
 	color: white;
 	content: "●";
+}
+
+body {
+	margin: 0;
+    background-color: #d7d7d7;
+    font-size: 30px;
+    text-align: center;
+    min-width: 1200px;
+}
+
+.logo {
+	font-family: '游明朝' , 'Monotype Corsiva' , 'serif' , 'MS Serif' ;
+	background-color: #1f1f1f;
+	color: #fff;
+	font-size: 40px;
+    text-align: center;
+    height: 80px;
+	line-height: 80px;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0.8);
+	margin-bottom: 40px;
+}
+.logo_font1 {
+	font-size: 25px;
+    color: #6baba7;
+}
+.logo_font2 {
+    font-size: 60px;
+    color: #B8860B;
+}
+
+.content {
+	display: flex;
+    margin: 0 auto;
+}
+.subtitle {
+	font-family: '游明朝' , 'Monotype Corsiva' , 'serif' , 'MS Serif' ;
+}
+.box {
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background-color: #9f9f9f;
+}
+.left {
+	font-family: '游明朝' , 'Monotype Corsiva' , 'serif' , 'MS Serif' ;
+	margin: 0 0 0 auto;
+	width: 300px
+}
+#myTurn {
+	margin: 0 auto 20px;
+    width: auto;
+    height: 80px;
+    line-height: 80px;
+    font-size: 60px;
+}
+#showTurn {
+	margin: 0 auto 20px;
+    width: auto;
+    height: 80px;
+    line-height: 80px;
+    font-size: 60px;
+    color: white;
+    background-color: black;
+}
+#showNum {
+	margin: 0 auto;
+    width: auto;
+    height: 200px;
+    line-height: 66px;
+    font-size: 50px;
+}
+.right {
+	margin: 0 auto 0 0;
+    width: 400px;
+    height: 500px;
+    font-size: 25px;
+}
+#showGod {
+	margin: 0 auto 15px;
+	padding: 5px;
+    width: auto;
+    height: 200px;
+    line-height: 30px;
+    font-size: 20px;
+    text-align: left;
+}
+#showChat {
+	margin: 0 auto;
+	padding: 5px;
+    width: auto;
+    height: 200px;
+    line-height: 30px;
+    font-size: 20px;
+    text-align: left;
+}
+.chatBox {
+	width: 320px;
+	font-size: 20px;
+	background-color: #d4d4d4;
+	border-radius: 5px;
+	padding: 0 0 0 5px;
+}
+.chatButton {
+	hieght: 20px;
+	font-size: 20px;
+	border-radius: 5px;
 }

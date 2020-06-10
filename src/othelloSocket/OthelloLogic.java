@@ -107,8 +107,8 @@ public class OthelloLogic {
 				if(table[i][j].equals("no")) noNum++;
 			}
 		}
-		obj.setWNum(wNum);
-		obj.setBNum(bNum);
+		obj.setWhiteNum(wNum);
+		obj.setBlackNum(bNum);
 		obj.setNoNum(noNum);
 	}
 

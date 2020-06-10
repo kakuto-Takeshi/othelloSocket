@@ -24,14 +24,20 @@ public class OthelloSocket {
         	myRoom.setSession1(mySession);
         	room.add(myRoom);
         	MsgObj msg = new MsgObj("対戦相手を探しています。");
-    		myRoom.sendMsg(msg);
+        	mySession.getAsyncRemote().sendObject(msg);
+    		msg.setTurn("myTurn");
+    		msg.setMsg("black");
+    		mySession.getAsyncRemote().sendObject(msg);
         } else {
         	int roomIndex=Integer.parseInt(mySession.getId() , 16)/2;
         	OthelloRoom myRoom=room.get(roomIndex);
         	myRoom.setSession2(mySession);
         	if(myRoom.getSession1() != null && myRoom.getSession2() != null) {
-        		MsgObj msg = new MsgObj("対戦相手が見つかりました。<br>黒の番です。");
+        		MsgObj msg = new MsgObj("対戦相手が見つかりました。");
         		myRoom.sendMsg(msg);
+        		msg.setTurn("myTurn");
+        		msg.setMsg("white");
+        		mySession.getAsyncRemote().sendObject(msg);
         	} else if(myRoom.getSession1() == null) {
         		MsgObj msg = new MsgObj("対戦相手がいません。リロードしてください。");
     			mySession.getAsyncRemote().sendObject(msg);
@@ -45,9 +51,15 @@ public class OthelloSocket {
     	OthelloRoom myRoom = room.get(roomIndex);
     	if(obj instanceof MsgObj) {
     		MsgObj msgObj = (MsgObj) obj;
-    		if(Integer.parseInt(mySession.getId() , 16)%2 == 0) {msgObj.setTurn("黒");}
-    		else {msgObj.setTurn("白");}
-	    	myRoom.sendMsg(msgObj);
+    		if(msgObj.getMsg() == "") {
+    			msgObj.setMsg("入力されていません。");
+    			mySession.getAsyncRemote().sendObject(msgObj);
+    		} else {
+    			if(Integer.parseInt(mySession.getId() , 16)%2 == 0) {msgObj.setTurn("black");}
+        		else {msgObj.setTurn("white");}
+    	    	myRoom.sendMsg(msgObj);
+    		}
+
     	} else if (obj instanceof IndexObj){
     		IndexObj indexObj = (IndexObj) obj;
     		if(myRoom.getSession1() != null && myRoom.getSession2() != null) {
@@ -56,11 +68,11 @@ public class OthelloSocket {
 	    	    	if(isJudgment) {
 	    	    		myRoom.sendIndex(indexObj);
 	    	    		if(indexObj.getNoNum() == 0) {
-	    	    			MsgObj msg = new MsgObj("ゲーム終了！");
+	    	    			MsgObj msg = new MsgObj("Game Set !!");
 	    	        		myRoom.sendMsg(msg);
-	    	        		if(indexObj.getBNum() > indexObj.getWNum()) {
+	    	        		if(indexObj.getBlackNum() > indexObj.getWhiteNum()) {
 	    	        			msg.setMsg("黒の勝ち！");
-	    	        		} else if (indexObj.getBNum() < indexObj.getWNum()) {
+	    	        		} else if (indexObj.getBlackNum() < indexObj.getWhiteNum()) {
 	    	        			msg.setMsg("白の勝ち！");
 	    	        		} else {
 	    	        			msg.setMsg("引き分け！");

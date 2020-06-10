@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>OTHELLO</title>
+    <link rel="stylesheet" type="text/css" href="othello.css">
+</head>
+<body>
+	<div class="logo">
+		:|| O<span class="logo_font1">THE</span><span class="logo_font2">LL</span>O ||:
+	</div>
+	<div class="content">
+		<div class="left">
+			<div class="subtitle">Your Color</div>
+			<div class="box" id="myTurn"></div>
+			<div class="subtitle">Turn</div>
+			<div class="box" id="showTurn"></div>
+			<div class="subtitle">Number</div>
+			<div class="box" id="showNum">
+				<div>●：<span id="bStone">2</span></div>
+				<div><span style="color:white">●</span>：<span id="wStone">2</span></div>
+				<div>Empty：<span id="empty">60</span></div>
+			</div>
+		</div>
+		<table id="board">
+		    <tr>
+		        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		    </tr>
+		    <tr>
+		        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		    </tr>
+		    <tr>
+		        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		    </tr>
+		    <tr>
+		        <td></td>
+		        <td></td>
+		        <td></td>
+		        <td class="white"></td>
+		        <td class="black"></td>
+		        <td></td>
+		        <td></td>
+		        <td></td>
+		    </tr>
+		    <tr>
+		        <td></td>
+		        <td></td>
+		        <td></td>
+		        <td class="black"></td>
+		        <td class="white"></td>
+		        <td></td>
+		        <td></td>
+		        <td></td>
+		    </tr>
+		    <tr>
+		        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		    </tr>
+		    <tr>
+		        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		    </tr>
+		    <tr>
+		        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		    </tr>
+		</table>
+		<div class="right">
+			<div class="subtitle">Massage of God</div>
+			<div class="box" id="showGod"></div>
+			<div class="subtitle">Chat</div>
+			<div class="box" id="showChat"></div>
+			<div>
+				<input type="text" id="msg" name="msg" class="chatBox"/>
+				<input type="button" value="send" onclick="sendMsg();" class="chatButton"/>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="othello.js"></script>
+</body>
+</html>

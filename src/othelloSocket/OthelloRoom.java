@@ -29,10 +29,10 @@ public class OthelloRoom {
 	}
 
 	//ポイント送信
-		public void sendIndex(IndexObj obj) {
-			if(session1 != null) { session1.getAsyncRemote().sendObject(obj);}
-			if(session2 != null) { session2.getAsyncRemote().sendObject(obj);}
-		}
+	public void sendIndex(IndexObj obj) {
+		if(session1 != null) { session1.getAsyncRemote().sendObject(obj);}
+		if(session2 != null) { session2.getAsyncRemote().sendObject(obj);}
+	}
 
 	//ロジック実行
 	public boolean logic(IndexObj obj) {
